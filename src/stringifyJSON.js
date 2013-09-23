@@ -8,9 +8,19 @@ var stringifyJSON = function (obj) {
       return stringifyJSON(element);
     }).join(',') + "]";
   }else if(obj && typeof obj === "object") {
-    return "{" + _(obj).map(function (val, key){
-      return stringifyJSON(key) + ":" + stringifyJSON(val);
-    }).join(',') + "}";
+    var toReturn = _(obj).map(function (val, key){
+      if (typeof val === "function") {
+        val = val();
+      }
+      if (val !== undefined) {
+        return stringifyJSON(key) + ":" + stringifyJSON(val);
+      } else {
+        return null;
+      }
+    });
+    return '{' + _(toReturn).filter(function (element){
+      return (element !== null);
+    }).join(',') + '}';
   }
   else if(typeof obj === "string"){
     return  '"' + obj + '"';
