@@ -76,6 +76,20 @@ var mapPairs = function(json){
   }
 
   //find  SECOND obj/array inline
+  //which is the first second?
 
+  if(openBraketIndex[0] < openCurlyIndex[0] ){
+    if(openBraketIndex[1] < openCurlyIndex[0]){
+      //open Braket is first, second start is openBraket[1] 
+    } else if(openBraketIndex[1] > openCurlyIndex[0]){
+      //open Braket is first, second start is curly[0] 
+    }
+  }else if ( openBraketIndex[0] > openCurlyIndex[0] ){
+    if(openBraketIndex[0] > openCurlyIndex[1]){
+      //open Curly is first, second start is curly[1] 
+    } else if( openBraketIndex[0] < openCurlyIndex[1]){
+      //open Curley is first, second start is braket[0]
+    }
 
+  }
 };
