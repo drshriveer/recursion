@@ -9,7 +9,7 @@ var parseJSON = function (json) {
   // working below:  here is the recursion...
   // needs to CHECK that COMMAS are at the end of
   // a CLOSED set of numb
-
+/*
   if( json[0] === '[' ){
     //the array case
     var array = [];
@@ -62,14 +62,15 @@ var parseJSON = function (json) {
     //the string case
     return json;
   }
-
+*/
+return json;
 };
 
 
 //closure search....
 var closureSearch = function(json, startIndex){
   
-  var searchingForBraket = (json[i] === '[');
+  var searchingForBraket = (json[startIndex] === '[');
   var endIndex = 0;
   var numberOfUnclosedBrakets = 0;
   var numberOfUnclosedCurley = 0;
@@ -97,4 +98,39 @@ var closureSearch = function(json, startIndex){
   }
 
   return endIndex;
-} 
+};
+
+var tester = function(json){
+  if( json[0] === '[' ){
+    //the array case
+    var array = [];
+    var cut = 1;
+    console.log("json length is ", json.length);
+
+    for (var i = 1; i < json.length ; i++) {
+      console.log('i is ', i);
+      if (json[i] === '[' || json[i] === '{'){ // First sub set is found!
+        debugger;
+        cut = closureSearch(json, i);
+        debugger;
+        console.log('cut is ', cut);
+        array.push(parseJSON(json.slice(i, cut)));
+        debugger;
+        i = cut - 1;
+        debugger;
+        cut = i + 1;
+        debugger;
+      }
+      else if(json[i] === ','){
+        array.push(parseJSON(json.slice(cut,i)));
+        cut = i + 1;
+      }else if (i === json.length-1){
+        array.push(parseJSON(json.slice(cut,i)));
+      }
+      console.log(array);
+    }
+    return array;
+  }
+
+};
+
