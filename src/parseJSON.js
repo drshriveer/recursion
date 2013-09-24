@@ -5,19 +5,6 @@
 var parseJSON = function (json) {
 
   var numberStarters = [0,1,2,3,4,5,6,7,8,9,'-','.'];
-      //DONT NEED EVERY INDEX ONLY FIRST AND LAST!
-  var braketIndex = [];
-  var curlyIndex = [];
-
-  //builds indicies
-  for(var i = 0; i < json.length; i++){
-    var car = json[i];
-    if(car === '[' || ']'){
-      braketIndex.push(i);
-    } else if(car === '{' || '}'){
-      curlyIndex.push(i);
-    }
-  }
 
   // working below:  here is the recursion...
   // needs to CHECK that COMMAS are at the end of
@@ -67,55 +54,28 @@ var parseJSON = function (json) {
 
 };
 
-
-
-/** junk
-
-
-
-  //find `& index " [] {}
+var mapPairs = function(json){
   //DONT NEED EVERY INDEX ONLY FIRST AND LAST!
-  var braketIndex = [];
-  var curlyIndex = [];
+  var openBraketIndex = [];
+  var openCurlyIndex = [];
+  var closeBraketIndex = [];
+  var closeCurlyIndex = [];
 
   //builds indicies
   for(var i = 0; i < json.length; i++){
-    var car = json[i]; 
-    if(car === '[' || ']'){
-      braketIndex.push(i);
-    } else if(car === '{' || '}'){
-      curlyIndex.push(i);
+    var car = json[i];
+    if(car === '['){
+      openBraketIndex.push(i);
+    } else if(car === ']'){
+      closeBraketIndex.push(i);
+    } else if(car === '{'){
+      openCurlyIndex.push(i);
+    } else if( car === '}'){
+      closeCurlyIndex.push(i);
     }
   }
 
-
-if(json[i] === ','){
-        parseString(json.slice(startCut,i));
-        startCut = i;
-      } else if (json[i] === '['){
-        endCut = braketIndex.length - 2;
-        parseJSON( json.slice(i, braketIndex[ endCut ] ) );
-        startCut = endCut;
-        i = endCut - 1;
-      } else if(json[i] === '{'){
-        endCut = curlyIndex.length - 2;
-        parseJSON( json.slice( i, curlyIndex[ endCut ] ) );
-        startCut = endCut;
-        i = endCut - 1;
-      }
+  //find  SECOND obj/array inline
 
 
-
-
-  if(braketIndex.length > 0 && curlyIndex.length > 0){
-    if( braketIndex[0] < curlyIndex[0] ){ //brakets come first
-      parseJSON(json.splice(braketIndex[0],braketIndex[braketIndex.length-1]));
-    } else{ //curlies come first
-      parseJSON(json.splice(curlyIndex[0],curlyIndex[curlyIndex.length-1]));
-    }
-
-  }else{
-
-  }
-
-  */
+};
