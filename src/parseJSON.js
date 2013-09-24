@@ -105,21 +105,13 @@ var tester = function(json){
     //the array case
     var array = [];
     var cut = 1;
-    console.log("json length is ", json.length);
 
     for (var i = 1; i < json.length ; i++) {
-      console.log('i is ', i);
       if (json[i] === '[' || json[i] === '{'){ // First sub set is found!
-        debugger;
         cut = closureSearch(json, i);
-        debugger;
-        console.log('cut is ', cut);
         array.push(parseJSON(json.slice(i, cut)));
-        debugger;
         i = cut - 1;
-        debugger;
         cut = i + 1;
-        debugger;
       }
       else if(json[i] === ','){
         array.push(parseJSON(json.slice(cut,i)));
@@ -127,7 +119,6 @@ var tester = function(json){
       }else if (i === json.length-1){
         array.push(parseJSON(json.slice(cut,i)));
       }
-      console.log(array);
     }
     return array;
   }
