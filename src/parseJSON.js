@@ -53,7 +53,7 @@ var parseJSON = function (json) {
   }
 
 };
-
+/*
 var mapPairs = function(json){
   //DONT NEED EVERY INDEX ONLY FIRST AND LAST!
   var openBraketIndex = [];
@@ -80,7 +80,8 @@ var mapPairs = function(json){
 
   if(openBraketIndex[0] < openCurlyIndex[0] ){
     if(openBraketIndex[1] < openCurlyIndex[0]){
-      //open Braket is first, second start is openBraket[1] 
+      //open Braket is first, second start is openBraket[1]
+
     } else if(openBraketIndex[1] > openCurlyIndex[0]){
       //open Braket is first, second start is curly[0] 
     }
@@ -90,6 +91,43 @@ var mapPairs = function(json){
     } else if( openBraketIndex[0] < openCurlyIndex[1]){
       //open Curley is first, second start is braket[0]
     }
-
   }
-};
+};*/
+
+
+//are there any 
+
+
+//closure search....
+var closureSearch = function(jsnon, startIndex){
+  
+  var searchingForBraket = (json[i] === '[') ? true || false;
+  var endIndex = 0;
+  var numberOfUnclosedBrakets = 0;
+  var numberOfUnclosedCurley = 0;
+
+
+
+  for(var i = 0; i < json.length; i++){
+        var car = json[i];
+    if(car === '['){
+      numberOfUnclosedBrakets++;
+    } else if(car === ']'){
+      numberOfUnclosedBrakets--;
+      if(searchingForBraket && numberOfUnclosedBrakets === 0){
+        endIndex = i;
+        break;
+      }
+    } else if(car === '{'){
+      numberOfUnclosedCurley++;
+    } else if( car === '}'){
+      numberOfUnclosedCurley--;
+      if(!searchingForBraket && numberOfUnclosedCurley === 0){
+        endIndex = i;
+        break;
+      }
+    }
+  }
+
+  return [startIndex, endIndex]
+} 
